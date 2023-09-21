@@ -1,1 +1,2 @@
-// build your `Project` model here
+// database wrapper
+const database = require('../../data/dbConfig')

@@ -1,1 +1,2 @@
-// build your `Task` model here
+// database wrapper
+const database = require('../../data/dbConfig')
