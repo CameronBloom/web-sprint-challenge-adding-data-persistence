@@ -1,6 +1,19 @@
 // database wrapper
 const database = require('../../data/dbConfig')
 
+function addTask(task) {
+  return database('tasks').insert(task)
+    .then(([task_id]) => {
+      return database('tasks').where('task_id', task_id).first()
+    })
+    .then(task => {
+      return {
+        ...task,
+        task_completed: Boolean(task.task_completed),
+      }
+    })
+}
+
 async function getTasks() {
     
   const tasks = []
@@ -33,5 +46,6 @@ async function getTasks() {
 }
 
 module.exports = {
+  addTask,
   getTasks,
 }

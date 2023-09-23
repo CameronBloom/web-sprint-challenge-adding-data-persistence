@@ -1,8 +1,21 @@
 const express = require('express')
+const { checkProjectId, validateTask } = require('./middleware')
 
 const router = express.Router()
 
 const Task = require('./model')
+
+// POST
+router.post('/', checkProjectId, validateTask, (req, res, next) => {
+  const task = req.body
+
+  Task.addTask(task)
+    .then(result => {
+      res.status(201).json(result)
+    })
+    .catch(next)
+})
+
 
 // GET
 router.get('/', (req, res, next) => {
