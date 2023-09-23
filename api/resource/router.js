@@ -1,10 +1,20 @@
 const express = require('express')
+const { validateResource } = require('./middleware')
 
 const router = express.Router()
 
 const Resource = require('./model')
 
 // POST
+router.post('/', validateResource, (req, res, next) => {
+  const resource = req.body
+
+  Resource.addResource(resource)
+    .then(result => {
+      res.status(201).json(result)
+    })
+    .catch(next)
+})
 
 // GET
 router.get('/', (req, res, next) => {
