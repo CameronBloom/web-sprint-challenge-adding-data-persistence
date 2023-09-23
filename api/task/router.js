@@ -4,6 +4,15 @@ const router = express.Router()
 
 const Task = require('./model')
 
+// GET
+router.get('/', (req, res, next) => {
+  Task.getTasks()
+    .then(tasks => {
+      res.status(200).json(tasks)
+    })
+    .catch(next)
+})
+
 router.use("*", (req, res) => {
   res.json({ message: 'api is live', api: 'active' })
 })
