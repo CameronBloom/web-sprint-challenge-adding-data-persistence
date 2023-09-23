@@ -1,8 +1,18 @@
 const express = require('express')
+const { validateProject } = require('./middleware')
 
 const router = express.Router()
 
 const Project = require('./model')
+
+// GET
+router.get('/', (req, res, next) => {
+  Project.getProjects()
+    .then(projects => {
+      res.status(200).json(projects)
+    })
+    .catch(next)
+})
 
 router.use("*", (req, res) => {
   res.json({ message: 'api is live', api: 'active' })
