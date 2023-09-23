@@ -5,6 +5,17 @@ const router = express.Router()
 
 const Project = require('./model')
 
+// POST
+router.post('/', validateProject, (req, res, next) => {
+  const project = req.body
+
+  Project.addProject(project)
+    .then(result => {
+      res.status(201).json(result)
+    })
+    .catch(next)
+})
+
 // GET
 router.get('/', (req, res, next) => {
   Project.getProjects()

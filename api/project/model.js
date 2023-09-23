@@ -1,10 +1,16 @@
 // database wrapper
 const database = require('../../data/dbConfig')
 
-function addProjects(project) {
+function addProject(project) {
   return database('projects').insert(project)
     .then(([project_id]) => {
       return database('projects').where('project_id', project_id).first()
+    })
+    .then(project => {
+      return {
+        ...project,
+        project_completed: Boolean(project.project_completed),
+      }
     })
 }
 
@@ -35,6 +41,6 @@ async function getProjects() {
 }
 
 module.exports = {
-  addProjects,
+  addProject,
   getProjects,
 }
